@@ -1,0 +1,45 @@
+<h1>Show Task</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @task.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @task.description %>
+  </li>
+
+  <li>
+    <strong>Done:</strong>
+    <%= @task.done %>
+  </li>
+
+  <li>
+    <strong>Reminder at:</strong>
+    <%= @task.reminder_at %>
+  </li>
+
+</ul>
+
+<h3>SubTasks</h3>
+<ul>
+<%= for subtask <- @task.subtasks  do %>
+  <li class="subtask"><%= subtask.name %></li>
+<% end %>
+</ul>
+
+<h3>Add a SubTask</h3>
+<%= form_for @subtask_changeset, Routes.task_sub_task_path(@conn, :create, @task), fn f -> %>
+  <%= label f, :name %>
+  <%= textarea f, :name %>
+  <%= error_tag f, :name %>
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>
+
+<span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span>
+<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>
